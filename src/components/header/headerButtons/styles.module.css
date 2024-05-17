@@ -66,5 +66,8 @@
 
 .goProfileBtn:hover::after {
   display: inline-block;
+  position: relative;
+  right: 67px;
+  bottom: 16px;
   content: 'Edit profile';
 }
