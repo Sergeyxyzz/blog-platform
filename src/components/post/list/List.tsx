@@ -7,7 +7,7 @@ import { Pagination, Spin } from 'antd'
 import { setCurrentPage } from '../../../store/postsSlice'
 import { fetchPost } from '../../../store/postsSlice'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useCurrentPage, useIsLoading, usePosts, useTotalPages } from '../../../store/seletors'
+import { useCurrentPage, useIsLoading, usePosts, useTotalPages } from '../../../store/selectors'
 
 interface Author {
   username: string

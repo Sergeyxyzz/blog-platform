@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../../hook'
 import { logOut } from '../../../store/userSlice'
 import avaImageStatic from '../../../assets/ava.jpg'
 import { useProfileImage } from '../../../functions'
-import { useClientAuthorName, useUserAva, useUserEmail } from '../../../store/seletors'
+import { useClientAuthorName, useUserAva, useUserEmail } from '../../../store/selectors'
 
 const HeaderButtons: React.FC = () => {
   const dispatch = useAppDispatch()

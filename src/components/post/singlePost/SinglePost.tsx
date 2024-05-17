@@ -13,7 +13,7 @@ import NavigateButtons from '../../navigateButtons/NavigateButtons'
 import DelPostBtn from '../postButtons/delPostBtn/DelPostBtn'
 import EditPostBtn from '../postButtons/editPostBtn/EditPostBtn'
 import { postLike } from '../../../store/postsSlice'
-import { useCoincidenceAuthors, useCurrentPost } from '../../../store/seletors'
+import { useCoincidenceAuthors, useCurrentPost } from '../../../store/selectors'
 
 const SinglePost: React.FC = () => {
   const dispatch = useAppDispatch()

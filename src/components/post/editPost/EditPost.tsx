@@ -8,7 +8,7 @@ import { editPost } from '../../../store/postsSlice'
 import { useParams } from 'react-router-dom'
 import { fetchPostBySlug } from '../../../store/postsSlice'
 import { Modal } from 'antd'
-import { useCoincidenceAuthors, useCurrentPost } from '../../../store/seletors'
+import { useCoincidenceAuthors, useCurrentPost } from '../../../store/selectors'
 
 type FormValues = {
   slug: string

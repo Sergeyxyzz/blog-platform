@@ -8,7 +8,7 @@ import onlikeImg from '../../../../assets/onLike.svg'
 import { useProfileImage } from '../../../../functions'
 import { useAppDispatch } from '../../../../hook'
 import { postLike } from '../../../../store/postsSlice'
-import { useClientAuthorName } from '../../../../store/seletors'
+import { useClientAuthorName } from '../../../../store/selectors'
 
 type PostProps = {
   title: string

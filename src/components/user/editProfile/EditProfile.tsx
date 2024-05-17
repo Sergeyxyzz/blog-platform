@@ -6,7 +6,7 @@ import { updateUser } from '../../../store/userSlice'
 import { useAppDispatch } from '../../../hook'
 import { useNavigate } from 'react-router-dom'
 import { isValidImageURL } from '../../../functions'
-import { useClientAuthorName, useUserEmail } from '../../../store/seletors'
+import { useClientAuthorName, useUserEmail } from '../../../store/selectors'
 import NavigateButtons from '../../navigateButtons/NavigateButtons'
 
 interface FormData {
