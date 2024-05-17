@@ -80,13 +80,10 @@
   }
 
   .tag {
-    max-width: 500px;
-    white-space: normal;
-    overflow-wrap: break-word; /* Обеспечивает перенос на уровне слов */
     border: 1px solid black;
     font-size: 12px;
     line-height: 14.52px;
-    border-radius: 1px;
+    border-radius: 3px;
     padding: 5px;
     float: left;
     background-color: aliceblue;
@@ -96,9 +93,9 @@
   .noTag {
     border: 1px solid black;
     background-color: rgb(255, 206, 206);
+    border-radius: 3px;
     font-size: 12px;
     line-height: 14.52px;
-    border-radius: 1px;
     padding: 5px;
     float: left;
   }
@@ -106,9 +103,9 @@
   .errorTag {
     border: 1px solid black;
     background-color: rgb(255, 251, 0);
+    border-radius: 3px;
     font-size: 12px;
     line-height: 14.52px;
-    border-radius: 1px;
     padding: 5px;
     float: left;
   }

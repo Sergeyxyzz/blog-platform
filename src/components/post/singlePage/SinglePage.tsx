@@ -108,7 +108,7 @@ const SinglePage: React.FC = () => {
               ))
             ) : (
               <div className={styles.tagItem}>
-                <div className={styles.noTag}>Тэг не добавлен</div>
+                <div className={styles.noTag}>Тэги не добавлены</div>
               </div>
             )}
           </div>

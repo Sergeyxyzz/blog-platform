@@ -114,7 +114,7 @@ const CreateArticle: React.FC = () => {
                   <input
                     type="text"
                     placeholder="Tag"
-                    defaultValue={tagInput}
+                    value={tagInput}
                     onChange={(e) => setTagInput(e.target.value)}
                   />
                   <button
