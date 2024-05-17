@@ -3,7 +3,7 @@ import styles from './styles.module.css'
 import errorImg from '../../assets/404.jpeg'
 import NavigateButtons from '../navigateButtons/NavigateButtons'
 
-const NotFoundPage: React.FC = () => {
+const NotFound: React.FC = () => {
   return (
     <>
       <NavigateButtons />
@@ -14,4 +14,4 @@ const NotFoundPage: React.FC = () => {
   )
 }
 
-export default NotFoundPage
+export default NotFound

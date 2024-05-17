@@ -2,7 +2,6 @@ import React from 'react'
 import styles from './styles.module.css'
 import Header from '../header/Header'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import NotFoundPage from '../notFoundPage/NotFoundPage'
 import PrivateRoute from '../../PrivateRouter'
 import { useClientAuthorName } from '../../store/seletors'
 import HomePage from '../../pages/HomePage'
@@ -12,6 +11,7 @@ import UserRegistrationPage from '../../pages/UserRegistration'
 import CreatePostPage from '../../pages/CreatePostPage'
 import PostPage from '../../pages/PostPage'
 import EditPostPage from '../../pages/EditPostPage'
+import NotFoundPage from '../../pages/NotFoundPage'
 
 const App: React.FC = () => {
   const userName = useClientAuthorName()
