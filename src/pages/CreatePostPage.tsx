@@ -1,5 +1,5 @@
 import React from 'react'
-import CreateArticle from '../post/createArticle/CreateArticle'
+import CreateArticle from '../components/post/createArticle/CreateArticle'
 
 const CreatePostPage = () => {
   return <CreateArticle />

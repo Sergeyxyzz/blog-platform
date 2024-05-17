@@ -1,5 +1,5 @@
 import React from 'react'
-import SinglePage from '../post/singlePage/SinglePage'
+import SinglePage from '../components/post/singlePage/SinglePage'
 
 const PostPage = () => {
   return <SinglePage />
