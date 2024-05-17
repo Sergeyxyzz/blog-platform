@@ -44,7 +44,7 @@ const CreatePost: React.FC = () => {
         console.error(error.message)
       })
 
-    navigate(`/`)
+    navigate(-1)
   }
 
   const handleAddTag = () => {
