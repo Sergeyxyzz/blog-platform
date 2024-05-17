@@ -1,0 +1,105 @@
+.wrapSignUp {
+  position: relative;
+  top: 20px;
+  width: 384px;
+  margin: 0 auto;
+  padding: 48px 32px;
+  border-radius: 6px 0px 0px 0px;
+  border: 1px 0px 0px 0px;
+  background: white;
+  box-shadow: 1px 1px 3px 2px rgba(0, 0, 0, 0.36);
+
+  p {
+    color: red;
+  }
+
+  input {
+    width: 320px;
+    height: 40px;
+    border-radius: 4px;
+    margin-top: 20px;
+    padding-left: 10px;
+  }
+}
+
+input:focus {
+  background: #1d92ff17;
+}
+
+.checkboxInp {
+  position: relative;
+  display: inline-flex !important;
+  width: 320px;
+  bottom: 10px;
+  border-top: 1px solid gray;
+  top: 15px;
+
+  input {
+    position: relative;
+    bottom: 15px;
+    width: 20px;
+  }
+
+  p {
+    position: relative;
+    top: 5px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #595959;
+    left: 10px;
+  }
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  text-align: center;
+  color: #262626;
+}
+
+.errorInput {
+  border: 2px solid red;
+}
+
+.submitBtn {
+  position: relative;
+  top: 15px;
+  width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  background: #1890ff;
+  color: white;
+  cursor: pointer;
+}
+
+.footerText {
+  position: relative;
+  top: 20px;
+  color: #9c9c9c !important;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: center;
+}
+
+.spanButton {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #1890ff;
+}
+
+.headerInput {
+  position: relative;
+  top: 15px;
+  left: 2px;
+}

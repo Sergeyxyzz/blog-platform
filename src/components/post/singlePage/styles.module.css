@@ -1,0 +1,203 @@
+.wrap {
+  width: 938px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.36);
+  margin-bottom: 20px;
+  max-width: 938px;
+  margin-top: 30px;
+  height: auto;
+}
+
+.text {
+  font-size: 1.3em;
+  width: 100%;
+  overflow-wrap: break-word;
+}
+
+.hederPost {
+  display: inline-flex;
+}
+
+.titleNLikes {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-bottom: 4px;
+
+  .like {
+    width: 17px;
+    position: relative;
+  }
+
+  .totalLikes {
+    position: relative;
+    color: black;
+    font-size: 17px;
+  }
+
+  .title {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+    color: #366eff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    .textTitle {
+      max-width: 700px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: inline-block;
+    }
+  }
+}
+
+.inlineLikeImg {
+  width: 700px;
+}
+.inTitle {
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+.geniusImg {
+  width: 100%;
+}
+
+.underHeaderPost {
+  justify-content: space-between;
+  width: 95%;
+  padding-bottom: 4px;
+
+  .tagItem {
+    display: inline-flex;
+    margin-right: 5px;
+    max-width: 700px;
+    padding-bottom: 5px;
+  }
+
+  .tag {
+    max-width: 500px;
+    white-space: normal;
+    overflow-wrap: break-word; /* Обеспечивает перенос на уровне слов */
+    border: 1px solid black;
+    font-size: 12px;
+    line-height: 14.52px;
+    border-radius: 1px;
+    padding: 5px;
+    float: left;
+    background-color: aliceblue;
+    margin-right: 5px;
+  }
+
+  .noTag {
+    border: 1px solid black;
+    background-color: rgb(255, 206, 206);
+    font-size: 12px;
+    line-height: 14.52px;
+    border-radius: 1px;
+    padding: 5px;
+    float: left;
+  }
+
+  .errorTag {
+    border: 1px solid black;
+    background-color: rgb(255, 251, 0);
+    font-size: 12px;
+    line-height: 14.52px;
+    border-radius: 1px;
+    padding: 5px;
+    float: left;
+  }
+}
+.date {
+  color: grey;
+  display: inline-block;
+  font-size: 13px;
+  position: relative;
+  right: 10px;
+  top: 30px;
+}
+.description {
+  padding-top: 20px;
+  width: 100%;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 22px;
+}
+.descr {
+  width: 100%;
+  overflow-wrap: break-word;
+  color: grey;
+}
+
+.author {
+  .ava {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+  }
+}
+
+.authorName {
+  float: right;
+}
+
+.updateDate {
+  font-size: 0.9em;
+  color: grey;
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.columnFlex {
+  position: relative;
+  bottom: 12px;
+  display: flex;
+  align-items: flex-end;
+  align-self: flex-start;
+  justify-content: flex-start;
+}
+
+.authorName,
+.updateDate {
+  text-align: right;
+}
+
+.spanColumns {
+  display: flex;
+  flex-direction: column;
+}
+
+.ava {
+  position: relative;
+  margin-left: 10px;
+  top: 13px;
+  width: 50px;
+  height: 50px;
+}
+
+.postButtons {
+  float: right;
+  margin-top: 10px;
+}
+
+.btnLike {
+  position: relative;
+  margin-left: 10px;
+  margin-right: 5px;
+  width: 19px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  &:hover {
+    scale: 1.2;
+  }
+}

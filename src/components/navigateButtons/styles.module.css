@@ -1,0 +1,46 @@
+.wrapButtons {
+  display: inline-flex;
+}
+
+.btnBack,
+.btnHome {
+  padding: 20px;
+  font-size: 1.1em;
+  color: white;
+  font-style: italic;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 50%;
+  background: transparent;
+  transition: 0.5s ease-in-out;
+
+  img {
+    width: 50px;
+  }
+
+  &:hover {
+    img {
+      scale: 1.1;
+    }
+  }
+}
+
+.btnBack {
+  background: linear-gradient(-185deg, rgba(255, 255, 255, 1) 0%, rgba(187, 220, 255, 1) 100%);
+  border-right: 1px solid black;
+  transition: 0.5s ease-in-out;
+
+  &:hover {
+    background: linear-gradient(-185deg, rgba(248, 255, 157, 0.26) 0%, rgb(132, 255, 188) 100%);
+  }
+}
+
+.btnHome {
+  background: linear-gradient(5deg, rgba(187, 220, 255, 1) 0%, rgba(255, 255, 255, 1) 100%);
+
+  &:hover {
+    background: linear-gradient(185deg, rgba(255, 255, 255, 1) 0%, rgb(132, 255, 188) 100%);
+  }
+}

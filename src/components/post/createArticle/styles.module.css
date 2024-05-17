@@ -1,0 +1,145 @@
+.wrapPostArticle {
+  width: 938px;
+  height: auto;
+  margin: 0 auto;
+  margin-top: 30px;
+  input {
+    border: 1px solid grey;
+  }
+  div {
+    margin: 0 auto;
+    margin-bottom: 10px;
+  }
+  background: white;
+  box-shadow: 0px 1.46px 7.05px 0px black;
+
+  button:hover {
+    scale: 1.05;
+  }
+}
+
+.title {
+  padding-top: 40px;
+  padding-bottom: 20px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+  text-align: center;
+  font-weight: 600;
+  color: #262626;
+}
+
+.formPost {
+  margin: 0 auto;
+}
+
+.titlePost,
+.shortDescription,
+.description {
+  width: 874px;
+  input {
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+.description {
+  textarea {
+    min-width: 100%;
+    max-width: 100%;
+    max-height: 168px;
+    height: 168px;
+    min-height: 168px;
+    padding: 10px;
+    border: 1px solid grey;
+  }
+}
+
+.postTags {
+  width: 874px;
+  display: flex;
+  flex-direction: column;
+  .tagsTitle {
+    margin-bottom: 5px;
+  }
+  input {
+    width: 300px;
+    height: 40px;
+    padding: 10px;
+  }
+}
+
+.formSubmitBtnWrap {
+  width: 874px;
+  .btnSubmitFormPost {
+    position: relative;
+    right: 1px;
+    bottom: 13px;
+    width: 319px;
+    height: 40px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    background-color: #1890ff;
+  }
+}
+
+.btnAddTag {
+  cursor: pointer;
+  background: white;
+  border: 1px solid #1890ff;
+  width: 136px;
+  height: 40px;
+  border-radius: 6px;
+}
+
+.inlineTags {
+  display: flex;
+  gap: 15px;
+}
+
+.wrapTagsInside {
+  position: relative;
+  display: flex;
+  justify-self: start;
+  align-items: end;
+  float: left;
+  position: relative;
+  right: 137px;
+}
+
+.tagsUl {
+  list-style-type: none;
+}
+
+.tagItem {
+  width: 300px;
+  min-height: 40px;
+  border: 1px solid black;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.wrapLiTag {
+  display: flex;
+  gap: 15px;
+}
+
+.btnDelTagItem {
+  cursor: pointer;
+  background: white;
+  border: 1px solid red;
+  width: 136px;
+  height: 40px;
+  border-radius: 6px;
+}
+
+.btnAddTag,
+.btnDelTagItem {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.error {
+  color: red;
+}

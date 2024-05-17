@@ -1,0 +1,29 @@
+.wrap {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  height: 80px;
+  width: 100%;
+  background: white;
+
+  h6 {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+
+    &:hover {
+      scale: 1.1;
+    }
+  }
+
+  button {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+  }
+}
