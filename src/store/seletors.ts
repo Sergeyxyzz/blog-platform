@@ -14,6 +14,7 @@ export const useCoincidenceAuthors = (): boolean => {
   const clientAuthorName = useClientAuthorName()
   return serverAuthorName === clientAuthorName
 }
+
 export const useCurrentPost = () => {
   return useAppSelector((state: RootState) => state.posts?.currentPost?.article)
 }

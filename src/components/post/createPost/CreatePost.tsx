@@ -13,7 +13,7 @@ type FormValues = {
   tagList: string[]
 }
 
-const CreateArticle: React.FC = () => {
+const CreatePost: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const {
@@ -142,4 +142,4 @@ const CreateArticle: React.FC = () => {
   )
 }
 
-export default CreateArticle
+export default CreatePost

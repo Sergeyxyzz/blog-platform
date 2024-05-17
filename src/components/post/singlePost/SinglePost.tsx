@@ -15,7 +15,7 @@ import EditPostBtn from '../postButtons/editPostBtn/EditPostBtn'
 import { postLike } from '../../../store/postsSlice'
 import { useCoincidenceAuthors, useCurrentPost } from '../../../store/seletors'
 
-const SinglePage: React.FC = () => {
+const SinglePost: React.FC = () => {
   const dispatch = useAppDispatch()
   const { slug } = useParams()
   const post = useCurrentPost()
@@ -128,4 +128,4 @@ const SinglePage: React.FC = () => {
   )
 }
 
-export default SinglePage
+export default SinglePost

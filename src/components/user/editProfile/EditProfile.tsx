@@ -1,64 +1,69 @@
 import React from 'react'
 import styles from './styles.module.css'
 import { useForm } from 'react-hook-form'
-import { useAppDispatch } from '../../../hook'
 import { notification } from 'antd'
-import { registerUser } from '../../../store/userSlice'
+import { updateUser } from '../../../store/userSlice'
+import { useAppDispatch } from '../../../hook'
 import { useNavigate } from 'react-router-dom'
+import { isValidImageURL } from '../../../functions'
+import { useClientAuthorName, useUserEmail } from '../../../store/seletors'
 import NavigateButtons from '../../navigateButtons/NavigateButtons'
 
 interface FormData {
-  username: string
   email: string
   password: string
-  repeatPassword: string
-  privacyPolicy: boolean
+  username: string
+  image: string
 }
 
-const SignUp: React.FC = () => {
+const EditProfile: React.FC = () => {
   const navigate = useNavigate()
+  const name = useClientAuthorName()
+  const email = useUserEmail()
   const dispatch = useAppDispatch()
+
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<FormData>({ mode: 'onChange' })
 
   const onSubmit = (data: FormData) => {
-    dispatch(registerUser({ username: data.username, password: data.password, email: data.email }))
+    dispatch(
+      updateUser({
+        password: data.password,
+        email: data.email,
+        username: data.username,
+        image: data.image,
+      }),
+    )
       .unwrap()
       .then(() => {
         navigate('/')
       })
-      .catch(() =>
+      .catch(() => {
         notification.error({
           message: 'Ошибка!',
-          description: 'Пользователь с таким именем или почтой уже зарегестрирован.',
-        }),
-      )
-  }
-
-  const goSignIn = () => {
-    navigate('/sign-in')
+          description: 'Такой login или email уже зарегестрированы.',
+        })
+      })
   }
 
   const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-  const password = watch('password')
 
   return (
     <>
       <NavigateButtons />
-      <div className={styles.wrapSignUp}>
-        <h1 className={styles.title}>Create new account</h1>
+      <div className={styles.wrapSignIn}>
+        <h1 className={styles.title}>Edit profile</h1>
         <div className={styles.formWrap}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div>
               <span className={styles.headerInput}>Username</span>
               <input
                 type="text"
+                autoComplete=""
                 {...register('username', {
-                  required: 'Обязательное поле',
                   minLength: {
                     value: 3,
                     message: 'Username должен быть не менее 3 символов',
@@ -72,33 +77,33 @@ const SignUp: React.FC = () => {
                     message: 'Username может содержать только буквы и цифры',
                   },
                 })}
+                defaultValue={name || ''}
                 placeholder="Username"
-                className={errors.username ? styles.errorInput : ''}
               />
               {errors.username?.message && <p>{errors.username.message}</p>}
             </div>
             <div>
               <span className={styles.headerInput}>Email address</span>
               <input
-                type="email"
                 autoComplete="email"
+                type="email"
                 {...register('email', {
-                  required: 'Обязательное поле',
                   pattern: {
                     value: emailPattern,
-                    message: 'Email должен быть в формате user@example.com',
+                    message: 'Некорректный формат email',
                   },
                 })}
+                defaultValue={email || ''}
                 placeholder="Email address"
                 className={errors.email ? styles.errorInput : ''}
               />
-              {errors.email && <p>{errors.email.message}</p>}
+              {errors.email?.message && <p>{errors.email.message}</p>}
             </div>
             <div>
-              <span className={styles.headerInput}>Password</span>
+              <span className={styles.headerInput}>New password</span>
               <input
-                type="password"
                 autoComplete="new-password"
+                type="password"
                 {...register('password', {
                   required: 'Обязательное поле',
                   minLength: {
@@ -107,46 +112,29 @@ const SignUp: React.FC = () => {
                   },
                   maxLength: {
                     value: 40,
-                    message: 'Пароль должен быть не более 40 символов',
+                    message: 'Пароль не должен превышать 40 символов',
                   },
                 })}
-                placeholder="Password"
+                placeholder="New password"
                 className={errors.password ? styles.errorInput : ''}
               />
               {errors.password?.message && <p>{errors.password.message}</p>}
             </div>
             <div>
-              <span className={styles.headerInput}>Repeat password</span>
+              <span className={styles.headerInput}>Image URL</span>
               <input
-                type="password"
-                autoComplete="new-password"
-                {...register('repeatPassword', {
-                  validate: (value) => value === password || 'Пароли должны совпадать',
+                type="url"
+                {...register('image', {
+                  validate: (value) => isValidImageURL(value),
                 })}
-                placeholder="Repeat password"
-                className={errors.repeatPassword ? styles.errorInput : ''}
+                placeholder="URL картинки"
+                className={errors.image ? styles.errorInput : ''}
               />
-              {errors.repeatPassword?.message && <p>{errors.repeatPassword.message}</p>}
+              {errors.image?.message && <p>{errors.image.message}</p>}
             </div>
-
-            <label className={styles.checkboxInp}>
-              <input
-                type="checkbox"
-                {...register('privacyPolicy', { required: 'You must agree to the Privacy Policy' })}
-                className={errors.privacyPolicy ? styles.errorInput : ''}
-              />
-              <p>I agree to the processing of my personal information</p>
-            </label>
-            {errors.privacyPolicy?.message && <p>{errors.privacyPolicy.message}</p>}
             <button type="submit" className={styles.submitBtn}>
-              Create
+              Save
             </button>
-            <p className={styles.footerText}>
-              Already have an account?{' '}
-              <button className={styles.spanButton} onClick={goSignIn}>
-                Sign In
-              </button>
-            </p>
           </form>
         </div>
       </div>
@@ -154,4 +142,4 @@ const SignUp: React.FC = () => {
   )
 }
 
-export default SignUp
+export default EditProfile

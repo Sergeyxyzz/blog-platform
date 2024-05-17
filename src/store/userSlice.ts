@@ -6,7 +6,7 @@ import avaImageStatic from '../assets/ava.jpg'
 import { UserDetails } from './interfaces'
 
 export const registerUser = createAsyncThunk(
-  'app/registerUser',
+  'user/registerUser',
   async (userData: User, { rejectWithValue, dispatch }) => {
     try {
       const response = await fetch('https://blog.kata.academy/api/users', {
@@ -27,7 +27,7 @@ export const registerUser = createAsyncThunk(
 )
 
 export const loginUser = createAsyncThunk(
-  'app/loginUser',
+  'user/loginUser',
   async (userData: User, { rejectWithValue, dispatch }) => {
     try {
       const response = await fetch('https://blog.kata.academy/api/users/login', {
@@ -48,7 +48,7 @@ export const loginUser = createAsyncThunk(
 )
 
 export const updateUser = createAsyncThunk(
-  'app/updateUser',
+  'user/updateUser',
   async (userData: User, { rejectWithValue, dispatch }) => {
     try {
       const response = await fetch('https://blog.kata.academy/api/user', {

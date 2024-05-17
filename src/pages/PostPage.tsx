@@ -1,8 +1,8 @@
 import React from 'react'
-import SinglePage from '../components/post/singlePage/SinglePage'
+import SinglePost from '../components/post/singlePost/SinglePost'
 
 const PostPage = () => {
-  return <SinglePage />
+  return <SinglePost />
 }
 
 export default PostPage

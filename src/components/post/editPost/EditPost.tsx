@@ -18,7 +18,7 @@ type FormValues = {
   tagList: string[]
 }
 
-const EditPostComponent: React.FC = () => {
+const EditPost: React.FC = () => {
   const currentPost = useCurrentPost()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -207,4 +207,4 @@ const EditPostComponent: React.FC = () => {
   )
 }
 
-export default EditPostComponent
+export default EditPost
