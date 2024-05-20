@@ -1,7 +1,7 @@
 import React from 'react'
 import NotFound from '../components/notFound/NotFound'
 
-const NotFoundPage = () => {
+const NotFoundPage: React.FC = () => {
   return <NotFound />
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import SignUp from '../components/user/signUp/SignUp'
 
-const UserRegistrationPage = () => {
+const UserRegistrationPage: React.FC = () => {
   return <SignUp />
 }
 

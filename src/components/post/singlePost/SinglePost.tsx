@@ -14,6 +14,7 @@ import DelPostBtn from '../postButtons/delPostBtn/DelPostBtn'
 import EditPostBtn from '../postButtons/editPostBtn/EditPostBtn'
 import { postLike } from '../../../store/postsSlice'
 import { useCoincidenceAuthors, useCurrentPost } from '../../../store/selectors'
+import remarkGfm from 'remark-gfm'
 
 const SinglePost: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -116,7 +117,7 @@ const SinglePost: React.FC = () => {
           <div className={styles.description}>
             <div className={styles.text}>
               {post?.body?.trim() ? (
-                <ReactMarkdown>{post.body}</ReactMarkdown>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.body}</ReactMarkdown>
               ) : (
                 <span style={{ color: 'red' }}>Тело поста отсутствует</span>
               )}

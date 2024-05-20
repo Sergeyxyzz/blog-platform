@@ -1,7 +1,7 @@
 import React from 'react'
 import SinglePost from '../components/post/singlePost/SinglePost'
 
-const PostPage = () => {
+const PostPage: React.FC = () => {
   return <SinglePost />
 }
 

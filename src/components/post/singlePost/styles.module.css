@@ -63,14 +63,12 @@
   white-space: normal;
   overflow-wrap: break-word;
 }
-.geniusImg {
-  width: 100%;
-}
+
 
 .underHeaderPost {
   justify-content: space-between;
   width: 95%;
-  padding-bottom: 4px;
+  height: auto;
 
   .tagItem {
     display: inline-flex;
@@ -196,5 +194,15 @@
   cursor: pointer;
   &:hover {
     scale: 1.2;
+  }
+}
+
+.text {
+  p {
+    margin-bottom: 1em;
+  }
+  ul {
+    padding-left: 20px;
+    margin-bottom: 1em;
   }
 }

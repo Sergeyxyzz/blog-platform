@@ -1,7 +1,7 @@
 import React from 'react'
 import CreateArticle from '../components/post/createPost/CreatePost'
 
-const CreatePostPage = () => {
+const CreatePostPage: React.FC = () => {
   return <CreateArticle />
 }
 

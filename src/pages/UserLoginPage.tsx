@@ -1,7 +1,7 @@
 import React from 'react'
 import SignIn from '../components/user/signIn/SignIn'
 
-const UserLoginPage = () => {
+const UserLoginPage: React.FC = () => {
   return <SignIn />
 }
 

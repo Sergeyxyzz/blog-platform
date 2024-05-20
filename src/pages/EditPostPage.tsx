@@ -1,7 +1,7 @@
 import React from 'react'
 import EditPostComponent from '../components/post/editPost/EditPost'
 
-const EditPostPage = () => {
+const EditPostPage: React.FC = () => {
   return <EditPostComponent />
 }
 
