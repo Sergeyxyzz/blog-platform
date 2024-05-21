@@ -5,8 +5,6 @@ import { useAppDispatch } from '../../../hook'
 import { registerUser } from '../../../store/userSlice'
 import { useNavigate } from 'react-router-dom'
 import NavigateButtons from '../../navigateButtons/NavigateButtons'
-import { useIsLoadingUser } from '../../../store/selectors'
-import { Spin } from 'antd'
 
 interface FormData {
   username: string
@@ -19,7 +17,6 @@ interface FormData {
 const SignUp: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const isLoading = useIsLoadingUser()
   const {
     register,
     handleSubmit,
@@ -64,119 +61,112 @@ const SignUp: React.FC = () => {
   return (
     <>
       <NavigateButtons />
-      {isLoading ? (
-        <div className={styles.wrapSpinner}>
-          <h3 style={{ textAlign: 'center' }}>
-            <Spin />
-          </h3>
-        </div>
-      ) : (
-        <div className={styles.wrapSignUp}>
-          <h1 className={styles.title}>Create new account</h1>
-          <div className={styles.formWrap}>
-            <form onSubmit={handleSubmit((data) => onSubmit(data, setError))}>
-              <div>
-                <span className={styles.headerInput}>Username</span>
-                <input
-                  type="text"
-                  {...register('username', {
-                    required: 'Обязательное поле',
-                    minLength: {
-                      value: 3,
-                      message: 'должен быть не менее 3 символов',
-                    },
-                    maxLength: {
-                      value: 20,
-                      message: 'должен быть не более 20 символов',
-                    },
-                    pattern: {
-                      value: /^[a-zA-Z0-9]+$/,
-                      message: 'может содержать только буквы и цифры',
-                    },
-                  })}
-                  placeholder="Username"
-                  className={errors.username ? styles.errorInput : ''}
-                />
-                {errors.username?.message && (
-                  <p className={styles.errorMessage}>Username {errors.username.message}</p>
-                )}
-              </div>
-              <div>
-                <span className={styles.headerInput}>Email address</span>
-                <input
-                  type="email"
-                  autoComplete="email"
-                  {...register('email', {
-                    required: 'Обязательное поле',
-                    pattern: {
-                      value: emailPattern,
-                      message: 'должен быть в формате user@example.com',
-                    },
-                  })}
-                  placeholder="Email address"
-                  className={errors.email ? styles.errorInput : ''}
-                />
-                {errors.email && <p>Email {errors.email.message}</p>}
-              </div>
-              <div>
-                <span className={styles.headerInput}>Password</span>
-                <input
-                  type="password"
-                  autoComplete="new-password"
-                  {...register('password', {
-                    required: 'Обязательное поле',
-                    minLength: {
-                      value: 6,
-                      message: 'Пароль должен быть не менее 6 символов',
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: 'Пароль должен быть не более 40 символов',
-                    },
-                  })}
-                  placeholder="Password"
-                  className={errors.password ? styles.errorInput : ''}
-                />
-                {errors.password?.message && <p>{errors.password.message}</p>}
-              </div>
-              <div>
-                <span className={styles.headerInput}>Repeat password</span>
-                <input
-                  type="password"
-                  autoComplete="new-password"
-                  {...register('repeatPassword', {
-                    validate: (value) => value === password || 'Пароли должны совпадать',
-                  })}
-                  placeholder="Repeat password"
-                  className={errors.repeatPassword ? styles.errorInput : ''}
-                />
-                {errors.repeatPassword?.message && <p>{errors.repeatPassword.message}</p>}
-              </div>
 
-              <label className={styles.checkboxInp}>
-                <input
-                  type="checkbox"
-                  {...register('privacyPolicy', {
-                    required: 'You must agree to the Privacy Policy',
-                  })}
-                  className={errors.privacyPolicy ? styles.errorInput : ''}
-                />
-                <p>I agree to the processing of my personal information</p>
-              </label>
-              {errors.privacyPolicy?.message && <p>{errors.privacyPolicy.message}</p>}
-              <button type="submit" className={styles.submitBtn}>
-                Create
+      <div className={styles.wrapSignUp}>
+        <h1 className={styles.title}>Create new account</h1>
+        <div className={styles.formWrap}>
+          <form onSubmit={handleSubmit((data) => onSubmit(data, setError))}>
+            <div>
+              <span className={styles.headerInput}>Username</span>
+              <input
+                type="text"
+                {...register('username', {
+                  required: 'Обязательное поле',
+                  minLength: {
+                    value: 3,
+                    message: 'должен быть не менее 3 символов',
+                  },
+                  maxLength: {
+                    value: 20,
+                    message: 'должен быть не более 20 символов',
+                  },
+                  pattern: {
+                    value: /^[a-zA-Z0-9]+$/,
+                    message: 'может содержать только буквы и цифры',
+                  },
+                })}
+                placeholder="Username"
+                className={errors.username ? styles.errorInput : ''}
+              />
+              {errors.username?.message && (
+                <p className={styles.errorMessage}>Username {errors.username.message}</p>
+              )}
+            </div>
+            <div>
+              <span className={styles.headerInput}>Email address</span>
+              <input
+                type="email"
+                autoComplete="email"
+                {...register('email', {
+                  required: 'Обязательное поле',
+                  pattern: {
+                    value: emailPattern,
+                    message: 'должен быть в формате user@example.com',
+                  },
+                })}
+                placeholder="Email address"
+                className={errors.email ? styles.errorInput : ''}
+              />
+              {errors.email && <p>Email {errors.email.message}</p>}
+            </div>
+            <div>
+              <span className={styles.headerInput}>Password</span>
+              <input
+                type="password"
+                autoComplete="new-password"
+                {...register('password', {
+                  required: 'Обязательное поле',
+                  minLength: {
+                    value: 6,
+                    message: 'Пароль должен быть не менее 6 символов',
+                  },
+                  maxLength: {
+                    value: 40,
+                    message: 'Пароль должен быть не более 40 символов',
+                  },
+                })}
+                placeholder="Password"
+                className={errors.password ? styles.errorInput : ''}
+              />
+              {errors.password?.message && <p>{errors.password.message}</p>}
+            </div>
+            <div>
+              <span className={styles.headerInput}>Repeat password</span>
+              <input
+                type="password"
+                autoComplete="new-password"
+                {...register('repeatPassword', {
+                  validate: (value) => value === password || 'Пароли должны совпадать',
+                })}
+                placeholder="Repeat password"
+                className={errors.repeatPassword ? styles.errorInput : ''}
+              />
+              {errors.repeatPassword?.message && <p>{errors.repeatPassword.message}</p>}
+            </div>
+
+            <label className={styles.checkboxInp}>
+              <input
+                type="checkbox"
+                {...register('privacyPolicy', {
+                  required: 'You must agree to the Privacy Policy',
+                })}
+                className={errors.privacyPolicy ? styles.errorInput : ''}
+              />
+              <p>I agree to the processing of my personal information</p>
+            </label>
+            {errors.privacyPolicy?.message && <p>{errors.privacyPolicy.message}</p>}
+            <button type="submit" className={styles.submitBtn}>
+              Create
+            </button>
+            <p className={styles.footerText}>
+              Already have an account?{' '}
+              <button className={styles.spanButton} onClick={goSignIn}>
+                Sign In
               </button>
-              <p className={styles.footerText}>
-                Already have an account?{' '}
-                <button className={styles.spanButton} onClick={goSignIn}>
-                  Sign In
-                </button>
-              </p>
-            </form>
-          </div>
+            </p>
+          </form>
         </div>
-      )}
+      </div>
     </>
   )
 }
