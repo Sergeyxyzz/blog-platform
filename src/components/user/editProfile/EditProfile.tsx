@@ -63,99 +63,99 @@ const EditProfile: React.FC = () => {
   return (
     <>
       <NavigateButtons />
-      {isLoading ? (
-        <div className={styles.wrapSpinner}>
-          <h3 style={{ textAlign: 'center' }}>
+
+      <div className={styles.wrapSignIn}>
+        {isLoading ? (
+          <h1 style={{ textAlign: 'center' }}>
             <Spin />
-          </h3>
+          </h1>
+        ) : (
+          ''
+        )}
+        <h1 className={styles.title}>Edit profile</h1>
+        <div className={styles.formWrap}>
+          <form onSubmit={handleSubmit((data) => onSubmit(data, setError))}>
+            <div>
+              <span className={styles.headerInput}>Username</span>
+              <input
+                type="text"
+                autoComplete=""
+                {...register('username', {
+                  minLength: {
+                    value: 3,
+                    message: 'должен быть не менее 3 символов',
+                  },
+                  maxLength: {
+                    value: 20,
+                    message: 'должен быть не более 20 символов',
+                  },
+                  pattern: {
+                    value: /^[a-zA-Z0-9]+$/,
+                    message: 'может содержать только буквы и цифры',
+                  },
+                })}
+                defaultValue={name || ''}
+                placeholder="Username"
+                className={errors.username ? styles.errorInput : ''}
+              />
+              {errors.username?.message && <p>Username {errors.username.message}</p>}
+            </div>
+            <div>
+              <span className={styles.headerInput}>Email address</span>
+              <input
+                autoComplete="email"
+                type="email"
+                {...register('email', {
+                  pattern: {
+                    value: emailPattern,
+                    message: 'Некорректный формат',
+                  },
+                })}
+                defaultValue={email || ''}
+                placeholder="Email address"
+                className={errors.email ? styles.errorInput : ''}
+              />
+              {errors.email?.message && <p>Email {errors.email.message}</p>}
+            </div>
+            <div>
+              <span className={styles.headerInput}>New password</span>
+              <input
+                autoComplete="new-password"
+                type="password"
+                {...register('password', {
+                  required: 'Обязательное поле',
+                  minLength: {
+                    value: 6,
+                    message: 'Пароль должен быть не менее 6 символов',
+                  },
+                  maxLength: {
+                    value: 40,
+                    message: 'Пароль не должен превышать 40 символов',
+                  },
+                })}
+                placeholder="New password"
+                className={errors.password ? styles.errorInput : ''}
+              />
+              {errors.password?.message && <p>{errors.password.message}</p>}
+            </div>
+            <div>
+              <span className={styles.headerInput}>Image URL</span>
+              <input
+                type="url"
+                {...register('image', {
+                  validate: (value) => isValidImageURL(value),
+                })}
+                placeholder="URL картинки"
+                className={errors.image ? styles.errorInput : ''}
+              />
+              {errors.image?.message && <p>{errors.image.message}</p>}
+            </div>
+            <button type="submit" className={styles.submitBtn}>
+              Save
+            </button>
+          </form>
         </div>
-      ) : (
-        <div className={styles.wrapSignIn}>
-          <h1 className={styles.title}>Edit profile</h1>
-          <div className={styles.formWrap}>
-            <form onSubmit={handleSubmit((data) => onSubmit(data, setError))}>
-              <div>
-                <span className={styles.headerInput}>Username</span>
-                <input
-                  type="text"
-                  autoComplete=""
-                  {...register('username', {
-                    minLength: {
-                      value: 3,
-                      message: 'должен быть не менее 3 символов',
-                    },
-                    maxLength: {
-                      value: 20,
-                      message: 'должен быть не более 20 символов',
-                    },
-                    pattern: {
-                      value: /^[a-zA-Z0-9]+$/,
-                      message: 'может содержать только буквы и цифры',
-                    },
-                  })}
-                  defaultValue={name || ''}
-                  placeholder="Username"
-                  className={errors.username ? styles.errorInput : ''}
-                />
-                {errors.username?.message && <p>Username {errors.username.message}</p>}
-              </div>
-              <div>
-                <span className={styles.headerInput}>Email address</span>
-                <input
-                  autoComplete="email"
-                  type="email"
-                  {...register('email', {
-                    pattern: {
-                      value: emailPattern,
-                      message: 'Некорректный формат',
-                    },
-                  })}
-                  defaultValue={email || ''}
-                  placeholder="Email address"
-                  className={errors.email ? styles.errorInput : ''}
-                />
-                {errors.email?.message && <p>Email {errors.email.message}</p>}
-              </div>
-              <div>
-                <span className={styles.headerInput}>New password</span>
-                <input
-                  autoComplete="new-password"
-                  type="password"
-                  {...register('password', {
-                    required: 'Обязательное поле',
-                    minLength: {
-                      value: 6,
-                      message: 'Пароль должен быть не менее 6 символов',
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: 'Пароль не должен превышать 40 символов',
-                    },
-                  })}
-                  placeholder="New password"
-                  className={errors.password ? styles.errorInput : ''}
-                />
-                {errors.password?.message && <p>{errors.password.message}</p>}
-              </div>
-              <div>
-                <span className={styles.headerInput}>Image URL</span>
-                <input
-                  type="url"
-                  {...register('image', {
-                    validate: (value) => isValidImageURL(value),
-                  })}
-                  placeholder="URL картинки"
-                  className={errors.image ? styles.errorInput : ''}
-                />
-                {errors.image?.message && <p>{errors.image.message}</p>}
-              </div>
-              <button type="submit" className={styles.submitBtn}>
-                Save
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
+      </div>
     </>
   )
 }

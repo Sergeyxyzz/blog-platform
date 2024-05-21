@@ -5,6 +5,8 @@ import { useAppDispatch } from '../../../hook'
 import { registerUser } from '../../../store/userSlice'
 import { useNavigate } from 'react-router-dom'
 import NavigateButtons from '../../navigateButtons/NavigateButtons'
+import { Spin } from 'antd'
+import { useIsLoadingUser } from '../../../store/selectors'
 
 interface FormData {
   username: string
@@ -24,6 +26,8 @@ const SignUp: React.FC = () => {
     watch,
     formState: { errors },
   } = useForm<FormData>({ mode: 'onChange' })
+
+  const isLoading = useIsLoadingUser()
 
   const onSubmit = (data: FormData, setError: any) => {
     dispatch(
@@ -61,8 +65,14 @@ const SignUp: React.FC = () => {
   return (
     <>
       <NavigateButtons />
-
       <div className={styles.wrapSignUp}>
+        {isLoading ? (
+          <h1 style={{ textAlign: 'center' }}>
+            <Spin />
+          </h1>
+        ) : (
+          ''
+        )}
         <h1 className={styles.title}>Create new account</h1>
         <div className={styles.formWrap}>
           <form onSubmit={handleSubmit((data) => onSubmit(data, setError))}>
