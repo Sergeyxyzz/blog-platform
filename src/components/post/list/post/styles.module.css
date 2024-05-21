@@ -83,6 +83,8 @@
   justify-content: space-between;
   width: 95%;
   padding-bottom: 4px;
+  max-height: 30px;
+  overflow: hidden;
 
   .tagItem {
     display: inline-block;
