@@ -38,6 +38,9 @@ export interface PostsState {
   articlesCount: number
   currentPost: any
   bio: string | null
+  error: any
+  loadingLike: boolean
+  idErrorPost: null | string
 }
 
 export interface UserState {
@@ -47,4 +50,9 @@ export interface UserState {
   loginError: boolean
   bio: string | null
   isLoading: boolean
+}
+
+export interface PostResponse {
+  articles: any[]
+  articlesCount: number
 }

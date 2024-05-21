@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom'
 import { editPost } from '../../../store/postsSlice'
 import { useParams } from 'react-router-dom'
 import { fetchPostBySlug } from '../../../store/postsSlice'
-import { Modal } from 'antd'
-import { useCoincidenceAuthors, useCurrentPost } from '../../../store/selectors'
+import { Modal, Spin } from 'antd'
+import { useCoincidenceAuthors, useCurrentPost, useIsLoading } from '../../../store/selectors'
 
 type FormValues = {
   slug: string
@@ -27,6 +27,7 @@ const EditPost: React.FC = () => {
   const [stateTitle, setStateTitle] = useState<string>()
   const [stateDescription, setStateDescription] = useState<string>()
   const [stateBody, setStateBody] = useState<string>()
+  const isLoading = useIsLoading()
 
   const {
     title: initialTitle,
@@ -121,88 +122,97 @@ const EditPost: React.FC = () => {
   return (
     <div>
       <NavigateButtons />
-      <div className={styles.wrapPostArticle}>
-        <h1 className={styles.title}>Edit article</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.formPost}>
-          <div className={styles.titlePost}>
-            <label htmlFor="title">Title</label>
-            <input
-              type="text"
-              placeholder="Title"
-              {...register('title', { required: 'Заголовок обязателен' })}
-              value={stateTitle}
-              onChange={handleTitleChange}
-            />
-            {errors.title && <p className={styles.error}>{errors.title.message}</p>}
-          </div>
-          <div className={styles.shortDescription}>
-            <label htmlFor="description">Short description</label>
-            <input
-              type="text"
-              placeholder="Short description"
-              {...register('description', { required: 'Краткое описание обязательно' })}
-              value={stateDescription}
-              onChange={handleDescriptionChange}
-            />
-            {errors.description && <p className={styles.error}>{errors.description.message}</p>}
-          </div>
-          <div className={styles.description}>
-            <label htmlFor="text">Text</label>
-            <textarea
-              placeholder="Text"
-              {...register('text', { required: 'Текст обязателен' })}
-              value={stateBody}
-              onChange={handleBodyChange}
-            />
-            {errors.text && <p className={styles.error}>{errors.text.message}</p>}
-          </div>
-          <div className={styles.postTags}>
-            <label htmlFor="tags" className={styles.tagsTitle}>
-              Tags
-            </label>
-            <div className={styles.wrapTagsInside}>
-              <ul className={styles.tagsUl}>
-                {tagList?.map((tag, i) => (
-                  <span key={i} className={styles.wrapLiTag}>
-                    <li className={styles.tagItem}>{tag}</li>
+
+      {isLoading ? (
+        <div className={styles.wrapSpinner}>
+          <h3 style={{ textAlign: 'center' }}>
+            <Spin />
+          </h3>
+        </div>
+      ) : (
+        <div className={styles.wrapPostArticle}>
+          <h1 className={styles.title}>Edit article</h1>
+          <form onSubmit={handleSubmit(onSubmit)} className={styles.formPost}>
+            <div className={styles.titlePost}>
+              <label htmlFor="title">Title</label>
+              <input
+                type="text"
+                placeholder="Title"
+                {...register('title', { required: 'Заголовок обязателен' })}
+                value={stateTitle}
+                onChange={handleTitleChange}
+              />
+              {errors.title && <p className={styles.error}>{errors.title.message}</p>}
+            </div>
+            <div className={styles.shortDescription}>
+              <label htmlFor="description">Short description</label>
+              <input
+                type="text"
+                placeholder="Short description"
+                {...register('description', { required: 'Краткое описание обязательно' })}
+                value={stateDescription}
+                onChange={handleDescriptionChange}
+              />
+              {errors.description && <p className={styles.error}>{errors.description.message}</p>}
+            </div>
+            <div className={styles.description}>
+              <label htmlFor="text">Text</label>
+              <textarea
+                placeholder="Text"
+                {...register('text', { required: 'Текст обязателен' })}
+                value={stateBody}
+                onChange={handleBodyChange}
+              />
+              {errors.text && <p className={styles.error}>{errors.text.message}</p>}
+            </div>
+            <div className={styles.postTags}>
+              <label htmlFor="tags" className={styles.tagsTitle}>
+                Tags
+              </label>
+              <div className={styles.wrapTagsInside}>
+                <ul className={styles.tagsUl}>
+                  {tagList?.map((tag, i) => (
+                    <span key={i} className={styles.wrapLiTag}>
+                      <li className={styles.tagItem}>{tag}</li>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteTag(tag)}
+                        className={styles.btnDelTagItem}
+                      >
+                        Delete
+                      </button>
+                    </span>
+                  ))}
+                  <div className={styles.inlineTags}>
+                    <input
+                      id="tags"
+                      type="text"
+                      placeholder="Tag"
+                      value={tagInput}
+                      onChange={(e) => setTagInput(e.target.value)}
+                    />
                     <button
                       type="button"
-                      onClick={() => handleDeleteTag(tag)}
+                      onClick={handleClearTagInput}
                       className={styles.btnDelTagItem}
                     >
                       Delete
                     </button>
-                  </span>
-                ))}
-                <div className={styles.inlineTags}>
-                  <input
-                    id="tags"
-                    type="text"
-                    placeholder="Tag"
-                    value={tagInput}
-                    onChange={(e) => setTagInput(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    onClick={handleClearTagInput}
-                    className={styles.btnDelTagItem}
-                  >
-                    Delete
-                  </button>
-                  <button type="button" onClick={handleAddTag} className={styles.btnAddTag}>
-                    Add tag
-                  </button>
-                </div>
-              </ul>
+                    <button type="button" onClick={handleAddTag} className={styles.btnAddTag}>
+                      Add tag
+                    </button>
+                  </div>
+                </ul>
+              </div>
             </div>
-          </div>
-          <div className={styles.formSubmitBtnWrap}>
-            <button type="submit" className={styles.btnSubmitFormPost}>
-              Send
-            </button>
-          </div>
-        </form>
-      </div>
+            <div className={styles.formSubmitBtnWrap}>
+              <button type="submit" className={styles.btnSubmitFormPost}>
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   )
 }

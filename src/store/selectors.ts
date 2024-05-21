@@ -46,3 +46,19 @@ export const useIsLoading = (): boolean => {
 export const useUserAvaHost = (): string | undefined | null => {
   return useAppSelector((state: RootState) => state.posts?.currentPost?.article?.author?.image)
 }
+
+export const usePostError = (): string | null => {
+  return useAppSelector((state: RootState) => state.posts.error)
+}
+
+export const useLoadingLike = (): boolean => {
+  return useAppSelector((state: RootState) => state.posts.loadingLike)
+}
+
+export const useIdErrorPost = (): string | null => {
+  return useAppSelector((state: RootState) => state.posts.idErrorPost)
+}
+
+export const useIsLoadingUser = (): boolean => {
+  return useAppSelector((state: RootState) => state.user.isLoading)
+}

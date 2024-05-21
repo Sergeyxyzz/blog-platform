@@ -1,18 +1,17 @@
 import React from 'react'
 import { useAppDispatch } from '../../../../hook'
 import { deletePost } from '../../../../store/postsSlice'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Modal } from 'antd'
 import styles from './styles.module.css'
 
 const DelPostBtn: React.FC = () => {
-  const { state } = useLocation()
-  const post = state?.post
+  const { slug } = useParams<{ slug: any }>()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const handleDelete = async () => {
-    const resultAction = await dispatch(deletePost(post.slug))
+    const resultAction = await dispatch(deletePost(slug))
     if (deletePost.rejected.match(resultAction)) {
       Modal.error({
         title: 'Ошибка',

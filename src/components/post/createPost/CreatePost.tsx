@@ -5,6 +5,8 @@ import styles from './styles.module.css'
 import NavigateButtons from '../../navigateButtons/NavigateButtons'
 import { useAppDispatch } from '../../../hook'
 import { useNavigate } from 'react-router-dom'
+import { useIsLoading } from '../../../store/selectors'
+import { Spin } from 'antd'
 
 type FormValues = {
   title: string
@@ -16,6 +18,8 @@ type FormValues = {
 const CreatePost: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const isLoading = useIsLoading()
+
   const {
     register,
     handleSubmit,
@@ -26,25 +30,24 @@ const CreatePost: React.FC = () => {
   const [tagList, setTaglist] = useState<string[]>([])
   const [tagInput, setTagInput] = useState<string>('')
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    dispatch(
-      postPost({
-        title: data.title,
-        description: data.description,
-        body: data.text,
-        tagList,
-      }),
-    )
-      .then(() => {
-        reset()
-        setTaglist([])
-        setTagInput('')
-      })
-      .catch((error: { message: string }) => {
-        console.error(error.message)
-      })
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    try {
+      const resultAction = await dispatch(
+        postPost({
+          title: data.title,
+          description: data.description,
+          body: data.text,
+          tagList,
+        }),
+      ).unwrap()
 
-    navigate('/articles/')
+      reset()
+      setTaglist([])
+      setTagInput('')
+      navigate(`/articles/${resultAction.slug}`)
+    } catch {
+      console.error('error')
+    }
   }
 
   const handleAddTag = () => {
@@ -66,78 +69,89 @@ const CreatePost: React.FC = () => {
   return (
     <div>
       <NavigateButtons />
-      <div className={styles.wrapPostArticle}>
-        <h1 className={styles.title}>Create new article</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.formPost}>
-          <div className={styles.titlePost}>
-            <label htmlFor="title">Title</label>
-            <input
-              type="text"
-              placeholder="Title"
-              {...register('title', { required: 'Заголовок обязателен' })}
-            />
-            {errors.title && <p className={styles.error}>{errors.title.message}</p>}
-          </div>
-          <div className={styles.shortDescription}>
-            <label htmlFor="description">Short description</label>
-            <input
-              type="text"
-              placeholder="Short description"
-              {...register('description', { required: 'Краткое описание обязательно' })}
-            />
-            {errors.description && <p className={styles.error}>{errors.description.message}</p>}
-          </div>
-          <div className={styles.description}>
-            <label htmlFor="text">Text</label>
-            <textarea placeholder="Text" {...register('text', { required: 'Текст обязателен' })} />
-            {errors.text && <p className={styles.error}>{errors.text.message}</p>}
-          </div>
-          <div className={styles.postTags}>
-            <label className={styles.tagsTitle} htmlFor="tags">
-              Tags
-            </label>
-            <div className={styles.wrapTagsInside}>
-              <ul className={styles.tagsUl}>
-                {tagList.map((tag, i) => (
-                  <span key={i} className={styles.wrapLiTag}>
-                    <li className={styles.tagItem}>{tag}</li>
+      {isLoading ? (
+        <div className={styles.wrapSpinner}>
+          <h3 style={{ textAlign: 'center' }}>
+            <Spin />
+          </h3>
+        </div>
+      ) : (
+        <div className={styles.wrapPostArticle}>
+          <h1 className={styles.title}>Create new article</h1>
+          <form onSubmit={handleSubmit(onSubmit)} className={styles.formPost}>
+            <div className={styles.titlePost}>
+              <label htmlFor="title">Title</label>
+              <input
+                type="text"
+                placeholder="Title"
+                {...register('title', { required: 'Заголовок обязателен' })}
+              />
+              {errors.title && <p className={styles.error}>{errors.title.message}</p>}
+            </div>
+            <div className={styles.shortDescription}>
+              <label htmlFor="description">Short description</label>
+              <input
+                type="text"
+                placeholder="Short description"
+                {...register('description', { required: 'Краткое описание обязательно' })}
+              />
+              {errors.description && <p className={styles.error}>{errors.description.message}</p>}
+            </div>
+            <div className={styles.description}>
+              <label htmlFor="text">Text</label>
+              <textarea
+                placeholder="Text"
+                {...register('text', { required: 'Текст обязателен' })}
+              />
+              {errors.text && <p className={styles.error}>{errors.text.message}</p>}
+            </div>
+            <div className={styles.postTags}>
+              <label className={styles.tagsTitle} htmlFor="tags">
+                Tags
+              </label>
+              <div className={styles.wrapTagsInside}>
+                <ul className={styles.tagsUl}>
+                  {tagList.map((tag, i) => (
+                    <span key={i} className={styles.wrapLiTag}>
+                      <li className={styles.tagItem}>{tag}</li>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteTag(tag)}
+                        className={styles.btnDelTagItem}
+                      >
+                        Delete
+                      </button>
+                    </span>
+                  ))}
+                  <div className={styles.inlineTags}>
+                    <input
+                      type="text"
+                      placeholder="Tag"
+                      value={tagInput}
+                      onChange={(e) => setTagInput(e.target.value)}
+                    />
                     <button
                       type="button"
-                      onClick={() => handleDeleteTag(tag)}
+                      onClick={handleClearTagInput}
                       className={styles.btnDelTagItem}
                     >
                       Delete
                     </button>
-                  </span>
-                ))}
-                <div className={styles.inlineTags}>
-                  <input
-                    type="text"
-                    placeholder="Tag"
-                    value={tagInput}
-                    onChange={(e) => setTagInput(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    onClick={handleClearTagInput}
-                    className={styles.btnDelTagItem}
-                  >
-                    Delete
-                  </button>
-                  <button type="button" onClick={handleAddTag} className={styles.btnAddTag}>
-                    Add tag
-                  </button>
-                </div>
-              </ul>
+                    <button type="button" onClick={handleAddTag} className={styles.btnAddTag}>
+                      Add tag
+                    </button>
+                  </div>
+                </ul>
+              </div>
             </div>
-          </div>
-          <div className={styles.formSubmitBtnWrap}>
-            <button type="submit" className={styles.btnSubmitFormPost}>
-              Send
-            </button>
-          </div>
-        </form>
-      </div>
+            <div className={styles.formSubmitBtnWrap}>
+              <button type="submit" className={styles.btnSubmitFormPost}>
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   )
 }

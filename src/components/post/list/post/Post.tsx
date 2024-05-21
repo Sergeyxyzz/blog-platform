@@ -9,6 +9,7 @@ import { useProfileImage } from '../../../../functions'
 import { useAppDispatch } from '../../../../hook'
 import { postLike } from '../../../../store/postsSlice'
 import { useClientAuthorName } from '../../../../store/selectors'
+import { Spin } from 'antd'
 
 type PostProps = {
   title: string
@@ -40,14 +41,22 @@ const Post: React.FC<PostProps> = ({
   const [profileImage, setProfileImage] = useState<string>(avaImageStatic)
   const loginName = useClientAuthorName()
   const dispatch = useAppDispatch()
+  const [isLoadingLikeForThisPost, setIsLoadingLikeForThisPost] = useState(false)
 
   useProfileImage(image, avaImageStatic, setProfileImage)
 
   const formattedDate = format(new Date(createdAt), 'MMMM d, yyyy')
   const updatedDate = format(new Date(updatedAt), 'MMMM d, yyyy')
 
-  const handleLikeClick = () => {
-    dispatch(postLike({ slug, isLiked: favorited }))
+  const handleLikeClick = async () => {
+    setIsLoadingLikeForThisPost(true)
+    try {
+      await dispatch(postLike({ slug, isLiked: favorited })).unwrap()
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoadingLikeForThisPost(false)
+    }
   }
 
   return (
@@ -72,11 +81,15 @@ const Post: React.FC<PostProps> = ({
             </Link>
 
             <button className={styles.btnLike} onClick={handleLikeClick}>
-              <img
-                src={favorited && loginName ? onlikeImg : likeImg}
-                alt="like"
-                className={styles.like}
-              />
+              {isLoadingLikeForThisPost ? (
+                <Spin />
+              ) : (
+                <img
+                  src={favorited && loginName ? onlikeImg : likeImg}
+                  alt="like"
+                  className={styles.like}
+                />
+              )}
             </button>
 
             <span className={styles.totalLikes}>{favoritesCount}</span>

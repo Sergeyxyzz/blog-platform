@@ -17,11 +17,17 @@ export const registerUser = createAsyncThunk(
         },
         body: JSON.stringify({ user: userData }),
       })
+
       const data = await response.json()
+
+      if (!response.ok) {
+        return rejectWithValue(data.errors)
+      }
+
       dispatch(setUserDetails(data.user))
       return data.user
-    } catch {
-      return rejectWithValue('Error register user')
+    } catch (error) {
+      return rejectWithValue('error')
     }
   },
 )
@@ -38,11 +44,17 @@ export const loginUser = createAsyncThunk(
         },
         body: JSON.stringify({ user: userData }),
       })
+
       const data = await response.json()
+
+      if (!response.ok) {
+        return rejectWithValue(data.errors)
+      }
+
       dispatch(setUserDetails(data.user))
       return data.user
-    } catch {
-      return rejectWithValue('Error login user')
+    } catch (error) {
+      return rejectWithValue('error')
     }
   },
 )
@@ -61,10 +73,15 @@ export const updateUser = createAsyncThunk(
       })
 
       const data = await response.json()
+
+      if (!response.ok) {
+        return rejectWithValue(data.errors)
+      }
+
       dispatch(setUserDetails(data.user))
       return data.user
-    } catch {
-      return rejectWithValue('Error update user')
+    } catch (error) {
+      return rejectWithValue('error')
     }
   },
 )
@@ -112,17 +129,28 @@ const userSlice = createSlice({
       .addCase(registerUser.rejected, (state) => {
         state.isLoading = false
       })
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true
+      })
       .addCase(loginUser.fulfilled, (state, action) => {
+        state.isLoading = false
         state.email = action.payload.email
         state.image = action.payload.image
         state.name = action.payload.username
       })
       .addCase(loginUser.rejected, (state) => {
-        state.loginError = true
+        state.loginError = false
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isLoading = true
       })
       .addCase(updateUser.fulfilled, (state, action) => {
+        state.isLoading = false
         state.name = action.payload.username
         state.image = action.payload.image
+      })
+      .addCase(updateUser.rejected, (state) => {
+        state.isLoading = false
       })
   },
 })

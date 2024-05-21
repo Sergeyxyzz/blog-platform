@@ -3,11 +3,17 @@ import styles from './styles.module.css'
 import Post from './post/Post'
 import { v4 as uuidv4 } from 'uuid'
 import { useAppDispatch } from '../../../hook'
-import { Pagination, Spin } from 'antd'
-import { setCurrentPage } from '../../../store/postsSlice'
+import { Pagination, Spin, notification } from 'antd'
+import { clearError, setCurrentPage } from '../../../store/postsSlice'
 import { fetchPost } from '../../../store/postsSlice'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useCurrentPage, useIsLoading, usePosts, useTotalPages } from '../../../store/selectors'
+import {
+  useCurrentPage,
+  useIsLoading,
+  usePostError,
+  usePosts,
+  useTotalPages,
+} from '../../../store/selectors'
 
 interface Author {
   username: string
@@ -28,6 +34,8 @@ interface PostType {
   author: Author
 }
 
+type Timer = ReturnType<typeof setTimeout>
+
 const List: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -37,6 +45,7 @@ const List: React.FC = () => {
   const isLoading = useIsLoading()
   const [pageParam, setPageParam] = useState(1)
   const [searchParams] = useSearchParams()
+  const postError = usePostError()
 
   useEffect(() => {
     const page = Number(searchParams.get('page')) || 1
@@ -57,29 +66,50 @@ const List: React.FC = () => {
   }, [pageParam, currentPage, dispatch])
 
   useEffect(() => {
+    let timer: Timer
+    if (postError) {
+      notification.error({
+        message: 'Ошибка!',
+        description: postError,
+      })
+      timer = setTimeout(() => {
+        dispatch(clearError())
+      }, 5)
+    }
+    return () => {
+      if (timer) {
+        clearTimeout(timer)
+      }
+    }
+  }, [postError, dispatch])
+
+  useEffect(() => {
     dispatch(fetchPost(currentPage))
   }, [currentPage, dispatch])
 
   return (
     <div className={styles.wrap}>
-      {isLoading && <Spin />}
-      {posts?.map((post: PostType) => (
-        <Post
-          key={uuidv4()}
-          favorited={post.favorited}
-          title={post.title}
-          slug={post.slug}
-          username={post.author.username}
-          image={post.author.image}
-          body={post.body}
-          description={post.description}
-          tagList={post.tagList}
-          following={post.author.following}
-          favoritesCount={post.favoritesCount}
-          createdAt={post.createdAt}
-          updatedAt={post.updatedAt}
-        />
-      ))}
+      {isLoading ? (
+        <Spin />
+      ) : (
+        posts?.map((post: PostType) => (
+          <Post
+            key={uuidv4()}
+            favorited={post.favorited}
+            title={post.title}
+            slug={post.slug}
+            username={post.author.username}
+            image={post.author.image}
+            body={post.body}
+            description={post.description}
+            tagList={post.tagList}
+            following={post.author.following}
+            favoritesCount={post.favoritesCount}
+            createdAt={post.createdAt}
+            updatedAt={post.updatedAt}
+          />
+        ))
+      )}
       <div className={styles.pagination}>
         <Pagination
           current={currentPage}

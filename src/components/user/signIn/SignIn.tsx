@@ -2,7 +2,6 @@ import React from 'react'
 import styles from './styles.module.css'
 import { useForm } from 'react-hook-form'
 import { useAppDispatch } from '../../../hook'
-import { notification } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { loginUser } from '../../../store/userSlice'
 import NavigateButtons from '../../navigateButtons/NavigateButtons'
@@ -19,6 +18,7 @@ const Login: React.FC = () => {
 
   const {
     register,
+    setError,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ mode: 'onChange' })
@@ -29,11 +29,19 @@ const Login: React.FC = () => {
       .then(() => {
         navigate('/')
       })
-      .catch(() => {
-        notification.error({
-          message: 'Ошибка!',
-          description: 'Неверно введен логин или пароль.',
-        })
+      .catch((error) => {
+        if (error && error.response && error.response.data) {
+          const { email, password } = error.response.data
+          if (email) {
+            setError('email', { type: 'manual', message: email })
+          }
+          if (password) {
+            setError('password', { type: 'manual', message: password })
+          }
+        } else {
+          setError('email', { type: 'manual', message: 'Incorrect email or password.' })
+          setError('password', { type: 'manual', message: 'Incorrect email or password.' })
+        }
       })
   }
 

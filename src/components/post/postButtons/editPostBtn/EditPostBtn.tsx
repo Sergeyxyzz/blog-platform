@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import styles from './styles.module.css'
 
 const EditPostBtn: React.FC = () => {
-
   const { slug } = useParams()
   const navigate = useNavigate()
 
