@@ -58,15 +58,7 @@ const Login: React.FC = () => {
   return (
     <>
       <NavigateButtons />
-
       <div className={styles.wrapSignIn}>
-        {isLoading ? (
-          <h1 style={{ textAlign: 'center' }}>
-            <Spin />
-          </h1>
-        ) : (
-          ''
-        )}
         <h1 className={styles.title}>Sign In</h1>
         <div className={styles.formWrap}>
           <form onSubmit={handleSubmit(onSubmit)}>
