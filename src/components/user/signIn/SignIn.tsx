@@ -5,8 +5,6 @@ import { useAppDispatch } from '../../../hook'
 import { useNavigate } from 'react-router-dom'
 import { loginUser } from '../../../store/userSlice'
 import NavigateButtons from '../../navigateButtons/NavigateButtons'
-import { Spin } from 'antd'
-import { useIsLoadingUser } from '../../../store/selectors'
 
 interface FormData {
   email: string
@@ -25,7 +23,6 @@ const Login: React.FC = () => {
     formState: { errors },
   } = useForm<FormData>({ mode: 'onChange' })
 
-  const isLoading = useIsLoadingUser()
 
   const onSubmit = (data: FormData) => {
     dispatch(loginUser({ password: data.password, email: data.email, username: data.username }))

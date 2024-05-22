@@ -4,11 +4,10 @@ import styles from './styles.module.css'
 import NavigateButtons from '../../navigateButtons/NavigateButtons'
 import { useAppDispatch } from '../../../hook'
 import { useNavigate } from 'react-router-dom'
-import { editPost } from '../../../store/postsSlice'
+import { editPost, fetchPostBySlug } from '../../../store/postsSlice'
 import { useParams } from 'react-router-dom'
-import { fetchPostBySlug } from '../../../store/postsSlice'
 import { Modal, Spin } from 'antd'
-import { useCoincidenceAuthors, useCurrentPost, useIsLoading } from '../../../store/selectors'
+import { useClientAuthorName, useCurrentPost, useIsLoading } from '../../../store/selectors'
 
 type FormValues = {
   slug: string
@@ -23,11 +22,11 @@ const EditPost: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { slug } = useParams()
-  const access = useCoincidenceAuthors()
   const [stateTitle, setStateTitle] = useState<string>()
   const [stateDescription, setStateDescription] = useState<string>()
   const [stateBody, setStateBody] = useState<string>()
   const isLoading = useIsLoading()
+  const clientLoginName = useClientAuthorName()
 
   const {
     title: initialTitle,
@@ -78,17 +77,19 @@ const EditPost: React.FC = () => {
   }
 
   useEffect(() => {
-    if (!access) {
-      Modal.info({ title: <h4>Вы не можете редактировать посты других пользователей</h4> })
-      navigate('/')
-    }
-  }, [])
-
-  useEffect(() => {
     if (slug) {
       dispatch(fetchPostBySlug(slug))
     }
+  }, [slug, dispatch])
 
+  useEffect(() => {
+    if (currentPost && currentPost.author.username !== clientLoginName) {
+      Modal.info({ title: <h4>Вы не можете редактировать посты других пользователей</h4> })
+      navigate('/')
+    }
+  }, [currentPost, clientLoginName, navigate])
+
+  useEffect(() => {
     setStateTitle(initialTitle)
     setStateDescription(initialDescription)
     setStateBody(initialBody)
